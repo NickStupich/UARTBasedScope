@@ -21,6 +21,8 @@ public:
 
 	double timeDomainOffset;
 	double frequencyDomainOffset;
+	
+	int fftSize;
 
 	System::Void SetFFTIsLogScale(int isLogScale)
 	{
@@ -73,6 +75,10 @@ public:
 			glVertex2d(i + padding, timeDomainData[i]*this->timeDomainScaling + this->timeDomainOffset + padding);
 			glVertex2d(i+1 + padding, timeDomainData[i+1]*this->timeDomainScaling + this->timeDomainOffset + padding);
 		}
+
+		//zero the end of the array to sample coherently
+		for(int i=this->fftSize;i<this->graphWidth;i++)
+			timeDomainData[i] = 0.0;
 
 		//frequency domain signal
 		fft->DoFFT(timeDomainData, frequencyDomainData, graphWidth);

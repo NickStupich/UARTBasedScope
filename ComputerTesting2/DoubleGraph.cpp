@@ -9,6 +9,7 @@ OpenGL::COpenGL(parentForm, graphWidth + 2 * padding, graphHeight*2 + 3 * paddin
 	this->frequencyDomainScaling = 1.0;
 	this->timeDomainOffset = 128.0;
 	this->frequencyDomainOffset = 1.0;
+	this->fftSize = 1024;
 
 	frequencyDomainData = (double*) malloc(graphWidth * sizeof(double));
 	fft = gcnew FastFourierTransform1();

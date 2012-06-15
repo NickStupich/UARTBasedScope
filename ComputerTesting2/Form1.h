@@ -162,6 +162,8 @@ private: System::Windows::Forms::Label^  label3;
 private: System::Windows::Forms::Label^  label4;
 private: System::Windows::Forms::Label^  label5;
 private: System::Windows::Forms::TrackBar^  trackBar3;
+private: System::Windows::Forms::Label^  label6;
+private: System::Windows::Forms::TrackBar^  trackBar4;
 
 
 
@@ -189,9 +191,12 @@ private: System::Windows::Forms::TrackBar^  trackBar3;
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->trackBar3 = (gcnew System::Windows::Forms::TrackBar());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->trackBar4 = (gcnew System::Windows::Forms::TrackBar());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar3))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar4))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// graphsPlaceholder
@@ -266,19 +271,19 @@ private: System::Windows::Forms::TrackBar^  trackBar3;
 			this->trackBar1->Name = L"trackBar1";
 			this->trackBar1->Size = System::Drawing::Size(169, 45);
 			this->trackBar1->TabIndex = 7;
-			this->trackBar1->Value = 500;
+			this->trackBar1->Value = 700;
 			this->trackBar1->Scroll += gcnew System::EventHandler(this, &Form1::trackBar1_Scroll);
 			// 
 			// trackBar2
 			// 
 			this->trackBar2->LargeChange = 10;
-			this->trackBar2->Location = System::Drawing::Point(1083, 426);
+			this->trackBar2->Location = System::Drawing::Point(1083, 377);
 			this->trackBar2->Maximum = 1000;
 			this->trackBar2->Minimum = 1;
 			this->trackBar2->Name = L"trackBar2";
 			this->trackBar2->Size = System::Drawing::Size(169, 45);
 			this->trackBar2->TabIndex = 8;
-			this->trackBar2->Value = 500;
+			this->trackBar2->Value = 700;
 			this->trackBar2->Scroll += gcnew System::EventHandler(this, &Form1::trackBar2_Scroll);
 			// 
 			// label3
@@ -293,7 +298,7 @@ private: System::Windows::Forms::TrackBar^  trackBar3;
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(1089, 410);
+			this->label4->Location = System::Drawing::Point(1089, 361);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(107, 13);
 			this->label4->TabIndex = 10;
@@ -302,7 +307,7 @@ private: System::Windows::Forms::TrackBar^  trackBar3;
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(1089, 521);
+			this->label5->Location = System::Drawing::Point(1089, 433);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(35, 13);
 			this->label5->TabIndex = 11;
@@ -311,7 +316,7 @@ private: System::Windows::Forms::TrackBar^  trackBar3;
 			// trackBar3
 			// 
 			this->trackBar3->LargeChange = 10;
-			this->trackBar3->Location = System::Drawing::Point(1092, 549);
+			this->trackBar3->Location = System::Drawing::Point(1092, 461);
 			this->trackBar3->Maximum = 1000;
 			this->trackBar3->Minimum = -1000;
 			this->trackBar3->Name = L"trackBar3";
@@ -321,11 +326,34 @@ private: System::Windows::Forms::TrackBar^  trackBar3;
 			this->trackBar3->Value = 128;
 			this->trackBar3->Scroll += gcnew System::EventHandler(this, &Form1::trackBar3_Scroll);
 			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(1090, 547);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(57, 13);
+			this->label6->TabIndex = 101;
+			this->label6->Text = L"FFT Width";
+			// 
+			// trackBar4
+			// 
+			this->trackBar4->LargeChange = 10;
+			this->trackBar4->Location = System::Drawing::Point(1093, 565);
+			this->trackBar4->Maximum = 1024;
+			this->trackBar4->Minimum = 950;
+			this->trackBar4->Name = L"trackBar4";
+			this->trackBar4->Size = System::Drawing::Size(159, 45);
+			this->trackBar4->TabIndex = 10;
+			this->trackBar4->Value = 1000;
+			this->trackBar4->Scroll += gcnew System::EventHandler(this, &Form1::trackBar4_Scroll);
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1264, 630);
+			this->Controls->Add(this->trackBar4);
+			this->Controls->Add(this->label6);
 			this->Controls->Add(this->trackBar3);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->label4);
@@ -344,6 +372,7 @@ private: System::Windows::Forms::TrackBar^  trackBar3;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar3))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar4))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -367,13 +396,16 @@ private: System::Void checkBox1_CheckedChanged(System::Object^  sender, System::
 			 this->Graphs->SetFFTIsLogScale(this->checkBox1->Checked);
 		 }
 private: System::Void trackBar1_Scroll(System::Object^  sender, System::EventArgs^  e) {
-			 this->Graphs->frequencyDomainScaling = Math::Pow(10.0, ((double)this->trackBar1->Value) / 100.0 - 5.0);
+			 this->Graphs->frequencyDomainScaling = Math::Pow(10.0, ((double)this->trackBar1->Value) / 100.0 - 7.0);
 		 }
 private: System::Void trackBar2_Scroll(System::Object^  sender, System::EventArgs^  e) {
-			 this->Graphs->timeDomainScaling = Math::Pow(10.0, ((double)this->trackBar2->Value)/100.0 - 5.0);
+			 this->Graphs->timeDomainScaling = Math::Pow(10.0, ((double)this->trackBar2->Value)/100.0 - 7.0);
 		 }
 private: System::Void trackBar3_Scroll(System::Object^  sender, System::EventArgs^  e) {
 			 this->Graphs->timeDomainOffset = this->trackBar3->Value;
+		 }
+private: System::Void trackBar4_Scroll(System::Object^  sender, System::EventArgs^  e) {
+			 this->Graphs->fftSize = this->trackBar4->Value;
 		 }
 };
 }
