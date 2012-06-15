@@ -26,9 +26,9 @@ namespace ComputerTesting2 {
 			
 			updateGraphs = true;
 
-			timeDomainData = (int*) malloc(DoubleGraph::graphWidth * sizeof(int));
+			timeDomainData = (double*) malloc(DoubleGraph::graphWidth * sizeof(double));
 			memset(timeDomainData, 0, DoubleGraph::graphWidth);
-			drawingTimeDomainData = (int*) malloc(DoubleGraph::graphWidth * sizeof(int));
+			drawingTimeDomainData = (double*) malloc(DoubleGraph::graphWidth * sizeof(double));
 			
 			this->Graphs = gcnew DoubleGraph(this, 10, 10);
 			DataReceiveDelegate^ dataReceived = gcnew DataReceiveDelegate(ComputerTesting2::Form1::onDataReceived);
@@ -119,7 +119,7 @@ namespace ComputerTesting2 {
 			}
 		}
 
-		static void onDataReceived(int n)
+		static void onDataReceived(double n)
 		{
 			timeDomainData[dataIndex] = n;
 			dataIndex++;
@@ -134,9 +134,9 @@ namespace ComputerTesting2 {
 		Thread ^updateGraphThread;
 		bool updateGraphs;
 
-		static int* timeDomainData;
+		static double* timeDomainData;
 		static int dataIndex;
-		static int* drawingTimeDomainData;
+		static double* drawingTimeDomainData;
 
 		static long totalUpdateCount;
 		static long totalFrameCount;
@@ -154,6 +154,15 @@ namespace ComputerTesting2 {
 	private: System::Windows::Forms::TextBox^  readingUPS;
 	private: System::Windows::Forms::TextBox^  drawingUPS;
 	private: System::Windows::Forms::Button^  pauseGraphsButton;
+    //private: System::Windows::Forms::TrackBar^ timeTrackBar;
+private: System::Windows::Forms::CheckBox^  checkBox1;
+private: System::Windows::Forms::TrackBar^  trackBar1;
+private: System::Windows::Forms::TrackBar^  trackBar2;
+private: System::Windows::Forms::Label^  label3;
+private: System::Windows::Forms::Label^  label4;
+private: System::Windows::Forms::Label^  label5;
+private: System::Windows::Forms::TrackBar^  trackBar3;
+
 
 
 	private: System::Windows::Forms::Panel^  graphsPlaceholder;
@@ -173,6 +182,16 @@ namespace ComputerTesting2 {
 			this->readingUPS = (gcnew System::Windows::Forms::TextBox());
 			this->drawingUPS = (gcnew System::Windows::Forms::TextBox());
 			this->pauseGraphsButton = (gcnew System::Windows::Forms::Button());
+			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
+			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
+			this->trackBar2 = (gcnew System::Windows::Forms::TrackBar());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->trackBar3 = (gcnew System::Windows::Forms::TrackBar());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar3))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// graphsPlaceholder
@@ -225,11 +244,95 @@ namespace ComputerTesting2 {
 			this->pauseGraphsButton->UseVisualStyleBackColor = true;
 			this->pauseGraphsButton->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
 			// 
+			// checkBox1
+			// 
+			this->checkBox1->AutoSize = true;
+			this->checkBox1->Checked = true;
+			this->checkBox1->CheckState = System::Windows::Forms::CheckState::Checked;
+			this->checkBox1->Location = System::Drawing::Point(1083, 140);
+			this->checkBox1->Name = L"checkBox1";
+			this->checkBox1->Size = System::Drawing::Size(80, 17);
+			this->checkBox1->TabIndex = 6;
+			this->checkBox1->Text = L"Logarithmic";
+			this->checkBox1->UseVisualStyleBackColor = true;
+			this->checkBox1->CheckedChanged += gcnew System::EventHandler(this, &Form1::checkBox1_CheckedChanged);
+			// 
+			// trackBar1
+			// 
+			this->trackBar1->LargeChange = 10;
+			this->trackBar1->Location = System::Drawing::Point(1083, 202);
+			this->trackBar1->Maximum = 1000;
+			this->trackBar1->Minimum = 1;
+			this->trackBar1->Name = L"trackBar1";
+			this->trackBar1->Size = System::Drawing::Size(169, 45);
+			this->trackBar1->TabIndex = 7;
+			this->trackBar1->Value = 500;
+			this->trackBar1->Scroll += gcnew System::EventHandler(this, &Form1::trackBar1_Scroll);
+			// 
+			// trackBar2
+			// 
+			this->trackBar2->LargeChange = 10;
+			this->trackBar2->Location = System::Drawing::Point(1083, 426);
+			this->trackBar2->Maximum = 1000;
+			this->trackBar2->Minimum = 1;
+			this->trackBar2->Name = L"trackBar2";
+			this->trackBar2->Size = System::Drawing::Size(169, 45);
+			this->trackBar2->TabIndex = 8;
+			this->trackBar2->Value = 500;
+			this->trackBar2->Scroll += gcnew System::EventHandler(this, &Form1::trackBar2_Scroll);
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(1089, 186);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(64, 13);
+			this->label3->TabIndex = 9;
+			this->label3->Text = L"FFT Scaling";
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(1089, 410);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(107, 13);
+			this->label4->TabIndex = 10;
+			this->label4->Text = L"Time Domain Scaling";
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(1089, 521);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(35, 13);
+			this->label5->TabIndex = 11;
+			this->label5->Text = L"Offset";
+			// 
+			// trackBar3
+			// 
+			this->trackBar3->LargeChange = 10;
+			this->trackBar3->Location = System::Drawing::Point(1092, 549);
+			this->trackBar3->Maximum = 1000;
+			this->trackBar3->Minimum = -1000;
+			this->trackBar3->Name = L"trackBar3";
+			this->trackBar3->Size = System::Drawing::Size(160, 45);
+			this->trackBar3->SmallChange = 20;
+			this->trackBar3->TabIndex = 100;
+			this->trackBar3->Value = 128;
+			this->trackBar3->Scroll += gcnew System::EventHandler(this, &Form1::trackBar3_Scroll);
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1264, 630);
+			this->Controls->Add(this->trackBar3);
+			this->Controls->Add(this->label5);
+			this->Controls->Add(this->label4);
+			this->Controls->Add(this->label3);
+			this->Controls->Add(this->trackBar2);
+			this->Controls->Add(this->trackBar1);
+			this->Controls->Add(this->checkBox1);
 			this->Controls->Add(this->pauseGraphsButton);
 			this->Controls->Add(this->drawingUPS);
 			this->Controls->Add(this->readingUPS);
@@ -238,6 +341,9 @@ namespace ComputerTesting2 {
 			this->Controls->Add(this->graphsPlaceholder);
 			this->Name = L"Form1";
 			this->Text = L"Form1";
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->trackBar3))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -257,6 +363,18 @@ namespace ComputerTesting2 {
 
 				 this->updateGraphs = !this->updateGraphs;
 			 }
+private: System::Void checkBox1_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+			 this->Graphs->SetFFTIsLogScale(this->checkBox1->Checked);
+		 }
+private: System::Void trackBar1_Scroll(System::Object^  sender, System::EventArgs^  e) {
+			 this->Graphs->frequencyDomainScaling = Math::Pow(10.0, ((double)this->trackBar1->Value) / 100.0 - 5.0);
+		 }
+private: System::Void trackBar2_Scroll(System::Object^  sender, System::EventArgs^  e) {
+			 this->Graphs->timeDomainScaling = Math::Pow(10.0, ((double)this->trackBar2->Value)/100.0 - 5.0);
+		 }
+private: System::Void trackBar3_Scroll(System::Object^  sender, System::EventArgs^  e) {
+			 this->Graphs->timeDomainOffset = this->trackBar3->Value;
+		 }
 };
 }
 

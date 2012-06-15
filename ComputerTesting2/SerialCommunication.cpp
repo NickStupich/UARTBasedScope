@@ -1,13 +1,7 @@
 #include "StdAfx.h"
 #include "SerialCommunication.h"
 
-#define useFakeData	0
-
-
-typedef union{
-	unsigned char raw[4];
-	int twosComplement : 32;
-}dataUnion;
+#define useFakeData	1
 
 typedef union{
 	unsigned char us;

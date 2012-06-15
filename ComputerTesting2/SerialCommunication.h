@@ -4,7 +4,7 @@
 using namespace System::IO::Ports;
 using namespace System;
 
-delegate void DataReceiveDelegate(int);
+delegate void DataReceiveDelegate(double);
 
 #pragma once
 ref class SerialCommunication
@@ -25,13 +25,14 @@ void SerialCommunication::Threadstarter()
 
 	while(true)
 	{
-		double angle = 2.0 * 3.141592654 * (DateTime::Now - start).TotalMilliseconds / 60.0;
-		double angle2 = 2.0 * 3.141592654 * (DateTime::Now - start).TotalMilliseconds / 100.0;
-		int n = (int)(50 * sin(angle) + 50 * sin(angle2) + 120);
+		double angle = 2.0 * 3.141592654 * (((double) count) / 100.0);
+		double angle2 = 2.0 * 3.141592654 * (((double) count) / 60.0);
+		double n = (50 * sin(angle) + 80 * sin(angle2));
 
 		this->_callbackFunction->Invoke(n);
 		count++;
 		System::Threading::Thread::Sleep(1);
+		//System::Threading::Thread::Sleep(0.5);
 	}
 }
 

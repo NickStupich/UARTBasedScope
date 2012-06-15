@@ -21,7 +21,7 @@ public:
 		this->useLogScale = logScale;
 	}
 
-	void DoFFT(int* input, int* output, int size)
+	void DoFFT(double* input, double* output, int size)
 	{
 		//code comes from http://www.codeproject.com/script/Articles/ViewDownloads.aspx?aid=9388
 
@@ -135,7 +135,7 @@ public:
 
 	if(this->useLogScale)
 	{
-		
+		/*	
 		double scaling = 20;
 		double logMax = Math::Log10(max);
 		double top = 255 * logMax / scaling;
@@ -144,7 +144,7 @@ public:
 			output[i] = (int)(scaling * (Math::Log10(vector[i])) - top);
 			if(output[i] < 0)
 				output[i] = 0;
-		}
+		}*/
 		/*
 		double logMax = Math::Log10(max);
 		for(int i=0;i<size;i++)
@@ -153,12 +153,18 @@ public:
 			if(output[i] < 0)
 				output[i] = 0;
 		}*/
+
+		for(int i=0;i<size;i++)
+		{
+			output[i] = Math::Log10(vector[i]);
+		}
+
 	}
 	else
 	{
 		for(int i=0;i<size;i++)
 		{
-			output[i] = (int)(255 * vector[i] / max);
+			output[i] = vector[i] / size;
 		}
 	}
 

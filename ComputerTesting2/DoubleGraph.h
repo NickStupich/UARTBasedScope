@@ -14,9 +14,20 @@ public:
 	static const int graphHeight = 256;
 	static const int padding = 20;
 	
-	int* frequencyDomainData;
+	double* frequencyDomainData;
 
-	virtual System::Void Render(int* timeDomainData)
+	double timeDomainScaling;
+	double frequencyDomainScaling;
+
+	double timeDomainOffset;
+	double frequencyDomainOffset;
+
+	System::Void SetFFTIsLogScale(int isLogScale)
+	{
+		this->fft->setLogScale(isLogScale);
+	}
+	
+	virtual System::Void Render(double* timeDomainData)
 	{
 		//get a black screen
 		COpenGL::Render();
@@ -59,8 +70,8 @@ public:
 		//time domain signal
 		for(int i=0;i<graphWidth - 1;i++)
 		{
-			glVertex2d(i + padding, timeDomainData[i] + padding);
-			glVertex2d(i+1 + padding, timeDomainData[i+1] + padding);
+			glVertex2d(i + padding, timeDomainData[i]*this->timeDomainScaling + this->timeDomainOffset + padding);
+			glVertex2d(i+1 + padding, timeDomainData[i+1]*this->timeDomainScaling + this->timeDomainOffset + padding);
 		}
 
 		//frequency domain signal
@@ -68,8 +79,8 @@ public:
 
 		for(int i=0;i<graphWidth - 1;i++)
 		{
-			glVertex2d(i + padding, frequencyDomainData[i] + padding * 2 + graphHeight);
-			glVertex2d(i+1 + padding, frequencyDomainData[i+1] + padding * 2 + graphHeight);
+			glVertex2d(i + padding, frequencyDomainData[i]*this->frequencyDomainScaling + this->frequencyDomainOffset + padding * 2 + graphHeight);
+			glVertex2d(i+1 + padding, frequencyDomainData[i+1]*this->frequencyDomainScaling + this->frequencyDomainOffset + padding * 2 + graphHeight);
 		}
 
 		//draw frquency labels on the frequency domain signal
