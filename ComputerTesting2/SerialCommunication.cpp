@@ -89,8 +89,8 @@ void SerialCommunication::DataReceivedHandler(Object^ sender, SerialDataReceived
 		fprintf(this->fp, "%x %x %x - %x = %d\n", dataArray[0], dataArray[1], dataArray[2], n, n);
 
 		//n = n / 65536 + 128;
-		n = n / 2000;// + 128;
-		this->_callbackFunction->Invoke(n);
+		//n = n / 2000;// + 128;
+		this->_callbackFunction->Invoke((double)n);
 	}
 
 }
