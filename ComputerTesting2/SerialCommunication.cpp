@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "SerialCommunication.h"
 
-#define useFakeData	1
+#define useFakeData	0
 
 typedef union{
 	unsigned char us;
@@ -20,22 +20,38 @@ SerialCommunication::SerialCommunication(DataReceiveDelegate^ callbackFunction)
 
 	this->fp = fopen( "data.txt", "w");
 
-	this->_serialPort->DataReceived += gcnew SerialDataReceivedEventHandler(this, &SerialCommunication::DataReceivedHandler);
 }
 
 int SerialCommunication::Open()
 {
+	int i;
 #if useFakeData == 0
 	this->_serialPort->Open();
 	int result = this->_serialPort->IsOpen;
-	this->_serialPort->Write("N");
+
+	//this->_serialPort->Write("N");
+	
+	unsigned int channel = 0;
+	unsigned char startCmd[4] = {0x4, 1<<channel, 0x0, 0x0};
+	String ^cmdString = gcnew String(reinterpret_cast<char const*>(startCmd));
+	unsigned char startResponse[4];
+	
+	this->_serialPort->Write(cmdString);
+
+	for(i=0;i<4;i++)
+		startResponse[i] = this->_serialPort->ReadByte();
+	
+	this->_serialPort->DataReceived += gcnew SerialDataReceivedEventHandler(this, &SerialCommunication::DataReceivedHandler);
 	
 	return result;
 #else
 	//testing without microcontroller - just add random points forever
 	System::Threading::ThreadStart^ starter = gcnew System::Threading::ThreadStart(this, &SerialCommunication::Threadstarter);
 	System::Threading::Thread^ thread = gcnew System::Threading::Thread(starter);
+
+
 	thread->Start();
+
 	return true;
 #endif
 }
