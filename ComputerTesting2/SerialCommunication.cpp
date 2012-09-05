@@ -12,7 +12,7 @@ SerialCommunication::SerialCommunication(DataReceiveDelegate^ callbackFunction)
 {
 	this->_callbackFunction = callbackFunction;
 	this->_serialPort = gcnew SerialPort();
-	this->_serialPort->PortName = "COM12";
+	this->_serialPort->PortName = "COM6";
 	this->_serialPort->BaudRate = 115200;
 	this->_serialPort->Parity = Parity::None;
 	this->_serialPort->DataBits = 8;
@@ -31,12 +31,14 @@ int SerialCommunication::Open()
 
 	//this->_serialPort->Write("N");
 	
-	unsigned int channel = 0;
+	unsigned int channel = 1;
 	unsigned char startCmd[4] = {0x4, 1<<channel, 0x0, 0x0};
-	String ^cmdString = gcnew String(reinterpret_cast<char const*>(startCmd));
 	unsigned char startResponse[4];
-	
-	this->_serialPort->Write(cmdString);
+	array<unsigned char>^ startBuf = gcnew array<unsigned char>(4);
+	for(i=0;i<4;i++) startBuf[i] = startCmd[i];
+	//String ^cmdString = gcnew String(reinterpret_cast<char const*>(startCmd));
+	this->_serialPort->Write(startBuf, 0, 4);
+	//this->_serialPort->Write(cmdString);
 
 	for(i=0;i<4;i++)
 		startResponse[i] = this->_serialPort->ReadByte();
