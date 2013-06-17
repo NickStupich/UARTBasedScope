@@ -12,7 +12,7 @@ SerialCommunication::SerialCommunication(DataReceiveDelegate^ callbackFunction)
 {
 	this->_callbackFunction = callbackFunction;
 	this->_serialPort = gcnew SerialPort();
-	this->_serialPort->PortName = "COM6";
+	this->_serialPort->PortName = "COM9";
 	this->_serialPort->BaudRate = 115200;
 	this->_serialPort->Parity = Parity::None;
 	this->_serialPort->DataBits = 8;
@@ -31,8 +31,10 @@ int SerialCommunication::Open()
 
 	//this->_serialPort->Write("N");
 	
-	unsigned int channel = 1;
-	unsigned char startCmd[4] = {0x4, 1<<channel, 0x0, 0x0};
+	unsigned int channel = 4;
+	//unsigned char startCmd[4] = {0x4, 1<<channel, SPS_2k, 0x0};
+	unsigned char startCmd[4] = {0x4, 1|2|4|16|32|64|128, SPS_500, 0x0};
+	//unsigned char startCmd[4] = {0x0, 0x0, 0x0, 0x0};
 	unsigned char startResponse[4];
 	array<unsigned char>^ startBuf = gcnew array<unsigned char>(4);
 	for(i=0;i<4;i++) startBuf[i] = startCmd[i];
